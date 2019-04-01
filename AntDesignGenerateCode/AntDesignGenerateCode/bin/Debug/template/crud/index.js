@@ -164,9 +164,6 @@ export default class Index extends PureComponent {
     }
 
 
-
-
-
     //停用#{tableNameChinese}
     handleDelete = (key) => {
 

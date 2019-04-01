@@ -164,9 +164,6 @@ export default class Index extends PureComponent {
     }
 
 
-
-
-
     //停用#{tableNameChinese}
     handleDelete = (key) => {
 
@@ -264,7 +261,7 @@ export default class Index extends PureComponent {
                                 <BaseTable
                                     columns={this.columns}
                                     dataSource={this.state.list.list}
-                                    rowKeyField={"bankOid"}
+                                    rowKeyField={"#{primaryKey}"}
                                     tablePagination={{ total: this.state.list.total, pageNum: this.state.list.pageNum, pageSize: this.state.list.pageSize }}
                                     onPageChange={this.onPageChange}
                                     onShowSizeChange={this.onShowSizeChange}

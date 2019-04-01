@@ -8,10 +8,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/add.js")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/services.js")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/models.js")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/details.js")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/index.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud/add.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud/services.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud/models.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud/details.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud/index.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/empty/index.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/empty/models.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/empty/services.js")]
 
 

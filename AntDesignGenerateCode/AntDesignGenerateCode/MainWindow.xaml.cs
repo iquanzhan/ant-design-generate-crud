@@ -106,6 +106,38 @@ namespace AntDesignGenerateCode
 
             #endregion
 
+
+
+            int index =comTemplate.SelectedIndex;
+            if (index < 0) {
+                System.Windows.MessageBox.Show("请选择生成模版");
+                return;
+            }
+            if (index == 0)
+            {
+                generateCrud(folder, tableName, tableNameUpper, tableNameChinese, list, tablePrimaryKey);
+            }
+            else {
+                generateEmpty(folder, tableName, tableNameUpper, tableNameChinese, list, tablePrimaryKey);
+            }
+
+
+            System.Windows.MessageBox.Show("生成成功");
+
+        }
+
+        /// <summary>
+        /// 生成只展示筛选和列表数据的代码
+        /// </summary>
+        /// <param name="folder">选择的生成目录</param>
+        /// <param name="tableName">表名</param>
+        /// <param name="tableNameUpper">表名首字母大写</param>
+        /// <param name="tableNameChinese">表名中文</param>
+        /// <param name="list">字段的集合</param>
+        /// <param name="tablePrimaryKey">表格主键</param>
+        private static void generateEmpty(String folder, String tableName, String tableNameUpper, String tableNameChinese, List<Table> list, String tablePrimaryKey)
+        {
+
             #region 生成详情页面
 
 
@@ -121,7 +153,151 @@ namespace AntDesignGenerateCode
                 string str = template.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", "record." + item.Name) + "\n\t\t\t";
                 detailsDescript.Append(str);
             }
-            string details = File.ReadAllText("template/Details.js");
+
+            string pagesPath = folder + "/pages";
+            if (!Directory.Exists(pagesPath))
+            {
+                Directory.CreateDirectory(pagesPath);
+            }
+            
+
+
+
+            #endregion
+
+            #region 生成编辑增加页面
+
+            //1.生成编辑中的列表
+
+            string templateEdit = @"{
+                    type: 'input',
+                    label: '#{fileld_comment}',
+                    field: '#{fileld_name}',
+                    placeholder: '请填写#{fileld_comment}',
+                    width: '75%',
+                    required: true,
+                    message: '请填写#{fileld_comment}',
+                    sm: 8,
+                    initialValue: record.#{fileld_name},
+                    ...formItemLayout
+                },";
+
+            StringBuilder editDescript = new StringBuilder();
+
+            foreach (var item in list)
+            {
+                string str = templateEdit.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", item.Name) + "\n\t\t\t\t";
+                editDescript.Append(str);
+            }
+
+            #endregion
+
+
+            #region 生成主页
+            string templateIndex = @"{
+                    type: 'input',
+                    label: '#{fileld_comment}',
+                    field: '#{fileld_name}',
+                    placeholder: '请输入#{fileld_comment}',
+                    width: 300
+                },";
+            string templateColumns = @"{
+                    title: '#{fileld_comment}',
+                    dataIndex: '#{fileld_name}'
+                },";
+
+            StringBuilder indexDescript = new StringBuilder();
+            StringBuilder columns = new StringBuilder();
+
+            foreach (var item in list)
+            {
+                string str = templateIndex.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", item.Name) + "\n\t\t\t\t";
+                indexDescript.Append(str);
+
+                string col = templateColumns.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", item.Name) + "\n\t\t\t\t";
+                columns.Append(col);
+            }
+            string indexFile = File.ReadAllText("template/empty/index.js");
+            indexFile = indexFile.Replace("#{descript}", editDescript.ToString());
+            indexFile = indexFile.Replace("#{columns_fileld}", columns.ToString());
+
+
+            indexFile = indexFile.Replace("#{tableName}", tableName).Replace("#{tableNameUpper}", tableNameUpper).Replace("#{primaryKey}", tablePrimaryKey).Replace("#{tableNameChinese}", tableNameChinese);
+
+            File.WriteAllText(pagesPath + "/index.js", indexFile);
+
+
+
+            #endregion
+
+
+
+            #region 生成models目录
+            string modelsPath = folder + "/pages/models";
+            if (!Directory.Exists(modelsPath))
+            {
+                Directory.CreateDirectory(modelsPath);
+            }
+
+            string modelsFile = File.ReadAllText("template/empty/models.js");
+
+
+            modelsFile = modelsFile.Replace("#{tableName}", tableName).Replace("#{tableNameUpper}", tableNameUpper).Replace("#{primaryKey}", tablePrimaryKey).Replace("#{tableNameChinese}", tableNameChinese);
+
+            File.WriteAllText(modelsPath + "/" + tableName + ".js", modelsFile);
+
+
+
+            #endregion
+
+            #region 生成services目录
+            string servicesPath = folder + "/services";
+            if (!Directory.Exists(servicesPath))
+            {
+                Directory.CreateDirectory(servicesPath);
+            }
+
+            string servicesFile = File.ReadAllText("template/empty/services.js");
+
+
+            servicesFile = servicesFile.Replace("#{tableName}", tableName).Replace("#{tableNameUpper}", tableNameUpper).Replace("#{primaryKey}", tablePrimaryKey).Replace("#{tableNameChinese}", tableNameChinese);
+
+            File.WriteAllText(servicesPath + "/" + tableName + ".js", servicesFile);
+
+            #endregion
+        }
+
+
+
+
+        /// <summary>
+        /// 生成增删改差的代码方法
+        /// </summary>
+        /// <param name="folder">选择的生成目录</param>
+        /// <param name="tableName">表名</param>
+        /// <param name="tableNameUpper">表名首字母大写</param>
+        /// <param name="tableNameChinese">表名中文</param>
+        /// <param name="list">字段的集合</param>
+        /// <param name="tablePrimaryKey">表格主键</param>
+        private static void generateCrud(String folder, String tableName, String tableNameUpper, String tableNameChinese, List<Table> list, String tablePrimaryKey)
+        {
+
+            #region 生成详情页面
+
+
+            string template = @"{
+                title: '#{fileld_comment}',
+                value: #{fileld_name}
+            },";
+
+            StringBuilder detailsDescript = new StringBuilder();
+
+            foreach (var item in list)
+            {
+                string str = template.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", "record." + item.Name) + "\n\t\t\t";
+                detailsDescript.Append(str);
+            }
+            string details = File.ReadAllText("template/crud/Details.js");
             details = details.Replace("#{descript}", detailsDescript.ToString());
 
             string pagesPath = folder + "/pages";
@@ -160,7 +336,7 @@ namespace AntDesignGenerateCode
                 string str = templateEdit.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", item.Name) + "\n\t\t\t\t";
                 editDescript.Append(str);
             }
-            string editFile = File.ReadAllText("template/Add.js");
+            string editFile = File.ReadAllText("template/crud/Add.js");
             editFile = editFile.Replace("#{descript}", editDescript.ToString());
 
             editFile = editFile.Replace("#{tableName}", tableName).Replace("#{tableNameUpper}", tableNameUpper).Replace("#{primaryKey}", tablePrimaryKey);
@@ -194,7 +370,7 @@ namespace AntDesignGenerateCode
                 string col = templateColumns.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", item.Name) + "\n\t\t\t\t";
                 columns.Append(col);
             }
-            string indexFile = File.ReadAllText("template/index.js");
+            string indexFile = File.ReadAllText("template/crud/index.js");
             indexFile = indexFile.Replace("#{descript}", editDescript.ToString());
             indexFile = indexFile.Replace("#{columns_fileld}", columns.ToString());
 
@@ -216,7 +392,7 @@ namespace AntDesignGenerateCode
                 Directory.CreateDirectory(modelsPath);
             }
 
-            string modelsFile = File.ReadAllText("template/models.js");
+            string modelsFile = File.ReadAllText("template/crud/models.js");
 
 
             modelsFile = modelsFile.Replace("#{tableName}", tableName).Replace("#{tableNameUpper}", tableNameUpper).Replace("#{primaryKey}", tablePrimaryKey).Replace("#{tableNameChinese}", tableNameChinese);
@@ -234,7 +410,7 @@ namespace AntDesignGenerateCode
                 Directory.CreateDirectory(servicesPath);
             }
 
-            string servicesFile = File.ReadAllText("template/services.js");
+            string servicesFile = File.ReadAllText("template/crud/services.js");
 
 
             servicesFile = servicesFile.Replace("#{tableName}", tableName).Replace("#{tableNameUpper}", tableNameUpper).Replace("#{primaryKey}", tablePrimaryKey).Replace("#{tableNameChinese}", tableNameChinese);
@@ -242,10 +418,8 @@ namespace AntDesignGenerateCode
             File.WriteAllText(servicesPath + "/" + tableName + ".js", servicesFile);
 
             #endregion
-
-            System.Windows.MessageBox.Show("生成成功");
-
         }
+
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
