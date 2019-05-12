@@ -15,6 +15,7 @@
         <ComboBox Name="comTemplate" HorizontalAlignment="Left" Margin="21,360,0,0" VerticalAlignment="Top" Width="120">
             <ComboBoxItem>单表增删改差</ComboBoxItem>
             <ComboBoxItem>单表筛选+展示</ComboBoxItem>
+            <ComboBoxItem>单表筛选+展示(非驼峰命名)</ComboBoxItem>
         </ComboBox>
     </Grid>
 </Window>

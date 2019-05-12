@@ -10,8 +10,18 @@ namespace AntDesignGenerateCode
     {
         public string Type { get; set; }
         public string Descript { get; set; }
+        private Boolean isNoPascal;
 
-        private string name;  
+        public Table()
+        {
+            this.isNoPascal = false;
+        }
+        public Table(Boolean isNoPascal)
+        {
+            this.isNoPascal = isNoPascal;
+        }
+
+        private string name;
 
         public string Name
         {
@@ -21,7 +31,15 @@ namespace AntDesignGenerateCode
             }
             set
             {
-                name =Utils.ToHump(value);
+                if (!this.isNoPascal)
+                {
+                    name = Utils.ToHump(value);
+                }
+                else
+                {
+                    name = value;
+                }
+
             }
         }
 

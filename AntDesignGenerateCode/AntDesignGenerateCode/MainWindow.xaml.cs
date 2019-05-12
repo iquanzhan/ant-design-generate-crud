@@ -50,10 +50,14 @@ namespace AntDesignGenerateCode
 
             if (String.IsNullOrEmpty(folder))
             {
-
                 System.Windows.MessageBox.Show("请先选择路径");
                 return;
             }
+            int index = comTemplate.SelectedIndex;
+
+            Boolean isNoPascal = index == 2;
+
+
 
             string content = txtContent.Text;
 
@@ -61,7 +65,11 @@ namespace AntDesignGenerateCode
 
             Match match = Regex.Match(content, @"CREATE TABLE `(\w+?)`", RegexOptions.ECMAScript);
             string tableName = match.Groups[1].Value;
-            tableName = Utils.ToHump(tableName);
+            if (!isNoPascal)
+            {
+                tableName = Utils.ToHump(tableName);
+            }
+
 
             string tableNameUpper = tableName.Substring(0, 1).ToUpper() + tableName.Substring(1);
 
@@ -75,7 +83,11 @@ namespace AntDesignGenerateCode
 
             Match matchPrimaryKey = Regex.Match(content, @"PRIMARY KEY \(`(\w+?)`\)", RegexOptions.ECMAScript);
             string tablePrimaryKey = matchPrimaryKey.Groups[1].Value;
-            tablePrimaryKey = Utils.ToHump(tablePrimaryKey);
+
+            if (!isNoPascal)
+            {
+                tablePrimaryKey = Utils.ToHump(tablePrimaryKey);
+            }
 
             #endregion
 
@@ -88,7 +100,7 @@ namespace AntDesignGenerateCode
 
             foreach (Match item in matchesNotNull)
             {
-                Table table = new Table();
+                Table table = new Table(isNoPascal);
                 table.Name = item.Groups[1].Value;
                 table.Type = item.Groups[2].Value;
                 table.Descript = item.Groups[3].Value;
@@ -97,7 +109,7 @@ namespace AntDesignGenerateCode
 
             foreach (Match item in matchesNull)
             {
-                Table table = new Table();
+                Table table = new Table(isNoPascal);
                 table.Name = item.Groups[1].Value;
                 table.Type = item.Groups[2].Value;
                 table.Descript = item.Groups[3].Value;
@@ -108,8 +120,9 @@ namespace AntDesignGenerateCode
 
 
 
-            int index =comTemplate.SelectedIndex;
-            if (index < 0) {
+
+            if (index < 0)
+            {
                 System.Windows.MessageBox.Show("请选择生成模版");
                 return;
             }
@@ -117,13 +130,158 @@ namespace AntDesignGenerateCode
             {
                 generateCrud(folder, tableName, tableNameUpper, tableNameChinese, list, tablePrimaryKey);
             }
-            else {
+            else if (index == 1)
+            {
                 generateEmpty(folder, tableName, tableNameUpper, tableNameChinese, list, tablePrimaryKey);
             }
+            else
+            {
+                generateNoPascalCrud(folder, tableName, tableNameUpper, tableNameChinese, list, tablePrimaryKey);
+            }
+
 
 
             System.Windows.MessageBox.Show("生成成功");
 
+        }
+
+        private void generateNoPascalCrud(string folder, string tableName, string tableNameUpper, string tableNameChinese, List<Table> list, string tablePrimaryKey)
+        {
+            #region 生成详情页面
+
+
+            string template = @"{
+                title: '#{fileld_comment}',
+                value: #{fileld_name}
+            },";
+
+            StringBuilder detailsDescript = new StringBuilder();
+
+            foreach (var item in list)
+            {
+                string str = template.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", "record." + item.Name) + "\n\t\t\t";
+                detailsDescript.Append(str);
+            }
+            string details = File.ReadAllText("template/crud/Details.js");
+            details = details.Replace("#{descript}", detailsDescript.ToString());
+
+            string pagesPath = folder + "/pages";
+            if (!Directory.Exists(pagesPath))
+            {
+                Directory.CreateDirectory(pagesPath);
+            }
+
+            File.WriteAllText(pagesPath + "/Details.js", details);
+
+
+
+            #endregion
+
+            #region 生成编辑增加页面
+
+            //1.生成编辑中的列表
+
+            string templateEdit = @"{
+                    type: 'input',
+                    label: '#{fileld_comment}',
+                    field: '#{fileld_name}',
+                    placeholder: '请填写#{fileld_comment}',
+                    width: '75%',
+                    message: '请填写#{fileld_comment}',
+                    sm: 8,
+                    initialValue: record.#{fileld_name},
+                    ...formItemLayout
+                },";
+
+            StringBuilder editDescript = new StringBuilder();
+
+            foreach (var item in list)
+            {
+                string str = templateEdit.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", item.Name) + "\n\t\t\t\t";
+                editDescript.Append(str);
+            }
+            string editFile = File.ReadAllText("template/crud/Add.js");
+            editFile = editFile.Replace("#{descript}", editDescript.ToString());
+
+            editFile = editFile.Replace("#{tableName}", tableName).Replace("#{tableNameUpper}", tableNameUpper).Replace("#{primaryKey}", tablePrimaryKey);
+
+            File.WriteAllText(pagesPath + "/Add" + tableNameUpper + ".js", editFile);
+
+            #endregion
+
+
+            #region 生成主页
+            string templateIndex = @"{
+                    type: 'input',
+                    label: '#{fileld_comment}',
+                    field: '#{fileld_name}',
+                    placeholder: '请输入#{fileld_comment}',
+                    width: 300
+                },";
+            string templateColumns = @"{
+                    title: '#{fileld_comment}',
+                    dataIndex: '#{fileld_name}'
+                },";
+
+            StringBuilder indexDescript = new StringBuilder();
+            StringBuilder columns = new StringBuilder();
+
+            foreach (var item in list)
+            {
+                string str = templateIndex.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", item.Name) + "\n\t\t\t\t";
+                indexDescript.Append(str);
+
+                string col = templateColumns.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", item.Name) + "\n\t\t\t\t";
+                columns.Append(col);
+            }
+            string indexFile = File.ReadAllText("template/crud/index.js");
+            indexFile = indexFile.Replace("#{descript}", editDescript.ToString());
+            indexFile = indexFile.Replace("#{columns_fileld}", columns.ToString());
+
+
+            indexFile = indexFile.Replace("#{tableName}", tableName).Replace("#{tableNameUpper}", tableNameUpper).Replace("#{primaryKey}", tablePrimaryKey).Replace("#{tableNameChinese}", tableNameChinese);
+
+            File.WriteAllText(pagesPath + "/index.js", indexFile);
+
+
+
+            #endregion
+
+
+
+            #region 生成models目录
+            string modelsPath = folder + "/pages/models";
+            if (!Directory.Exists(modelsPath))
+            {
+                Directory.CreateDirectory(modelsPath);
+            }
+
+            string modelsFile = File.ReadAllText("template/crud/models.js");
+
+
+            modelsFile = modelsFile.Replace("#{tableName}", tableName).Replace("#{tableNameUpper}", tableNameUpper).Replace("#{primaryKey}", tablePrimaryKey).Replace("#{tableNameChinese}", tableNameChinese);
+
+            File.WriteAllText(modelsPath + "/" + tableName + ".js", modelsFile);
+
+
+
+            #endregion
+
+            #region 生成services目录
+            string servicesPath = folder + "/services";
+            if (!Directory.Exists(servicesPath))
+            {
+                Directory.CreateDirectory(servicesPath);
+            }
+
+            string servicesFile = File.ReadAllText("template/crud/services.js");
+
+
+            servicesFile = servicesFile.Replace("#{tableName}", tableName).Replace("#{tableNameUpper}", tableNameUpper).Replace("#{primaryKey}", tablePrimaryKey).Replace("#{tableNameChinese}", tableNameChinese);
+
+            File.WriteAllText(servicesPath + "/" + tableName + ".js", servicesFile);
+
+            #endregion
         }
 
         /// <summary>
@@ -159,7 +317,7 @@ namespace AntDesignGenerateCode
             {
                 Directory.CreateDirectory(pagesPath);
             }
-            
+
 
 
 
