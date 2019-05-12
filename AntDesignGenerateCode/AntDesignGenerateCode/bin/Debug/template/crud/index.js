@@ -7,7 +7,7 @@ import { Icon, Badge, Popconfirm, Divider, message, Modal } from 'antd';
 import { connect } from 'dva';
 
 import SearchTable from '@/components/SearchTable';
-import AddBank from './Add#{tableNameUpper}';
+import Add#{tableNameUpper} from './Add#{tableNameUpper}';
 import ProductToolbar from '@/components/ProductToolbar';
 import ProductModal from '@/components/ProductModal';
 import BaseTable from '@/components/ProductTable/Base';
@@ -171,7 +171,7 @@ export default class Index extends PureComponent {
         const { dispatch } = this.props;
         dispatch({
             type: '#{tableName}/delete#{tableNameUpper}',
-            payload: { bankOid: key }
+            payload: { #{primaryKey}: key }
         }).then(() => {
             const response = this.props.#{tableName}.deleteStatus;
             let responses = JSON.parse(response);

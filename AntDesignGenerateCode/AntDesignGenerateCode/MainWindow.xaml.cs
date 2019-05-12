@@ -193,6 +193,11 @@ namespace AntDesignGenerateCode
                     ...formItemLayout
                 },";
 
+
+
+
+
+
             StringBuilder editDescript = new StringBuilder();
 
             foreach (var item in list)
@@ -235,7 +240,7 @@ namespace AntDesignGenerateCode
                 columns.Append(col);
             }
             string indexFile = File.ReadAllText("template/crud/index.js");
-            indexFile = indexFile.Replace("#{descript}", editDescript.ToString());
+            indexFile = indexFile.Replace("#{descript}", indexDescript.ToString());
             indexFile = indexFile.Replace("#{columns_fileld}", columns.ToString());
 
 
@@ -529,7 +534,7 @@ namespace AntDesignGenerateCode
                 columns.Append(col);
             }
             string indexFile = File.ReadAllText("template/crud/index.js");
-            indexFile = indexFile.Replace("#{descript}", editDescript.ToString());
+            indexFile = indexFile.Replace("#{descript}", indexDescript.ToString());
             indexFile = indexFile.Replace("#{columns_fileld}", columns.ToString());
 
 
