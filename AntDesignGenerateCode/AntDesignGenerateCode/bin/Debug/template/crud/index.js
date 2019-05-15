@@ -17,7 +17,7 @@ import Details from './Details';
 
 
 const modalLayout = {
-    style: { height: 'calc(40vh)', overflowY: 'auto', overflowX: 'hidden' }
+    style: { height: 'calc(80.3vh)', overflowY: 'auto', overflowX: 'hidden' }
 }
 
 @connect(({ #{tableName} }) => ({
@@ -53,8 +53,8 @@ export default class Index extends PureComponent {
     editButtons = {
         modal: {
             title: "编辑#{tableNameChinese}",
-            width: '70%',
-            style: { paddingTop: 0 }
+            width: '100%',
+            style: { paddingTop: 0, top: 0 },
         }
     };
 
