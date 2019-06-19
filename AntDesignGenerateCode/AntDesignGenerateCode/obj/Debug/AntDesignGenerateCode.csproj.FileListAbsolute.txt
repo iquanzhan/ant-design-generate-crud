@@ -20,3 +20,4 @@ G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\b
 G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\bin\Debug\template\empty\index.js
 G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\bin\Debug\template\empty\models.js
 G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\bin\Debug\template\empty\services.js
+G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\obj\Debug\AntDesignGenerateCode.csprojAssemblyReference.cache

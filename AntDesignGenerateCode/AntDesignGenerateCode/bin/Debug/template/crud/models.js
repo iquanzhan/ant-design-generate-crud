@@ -45,7 +45,7 @@ export default {
         get#{tableNameUpper}Status(state, action) {
             return {
                 ...state,
-                list: action.payload,
+                get#{tableNameUpper}Status: action.payload,
             };
         },
         addStatus(state, action) {

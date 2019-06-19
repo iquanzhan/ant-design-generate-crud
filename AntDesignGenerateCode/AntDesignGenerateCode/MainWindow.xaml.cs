@@ -221,11 +221,12 @@ namespace AntDesignGenerateCode
                     label: '#{fileld_comment}',
                     field: '#{fileld_name}',
                     placeholder: '请输入#{fileld_comment}',
-                    width: 300
+                    width: #{fileld_width}
                 },";
             string templateColumns = @"{
                     title: '#{fileld_comment}',
-                    dataIndex: '#{fileld_name}'
+                    dataIndex: '#{fileld_name}',
+                    width: #{fileld_width}
                 },";
 
             StringBuilder indexDescript = new StringBuilder();
@@ -233,10 +234,13 @@ namespace AntDesignGenerateCode
 
             foreach (var item in list)
             {
-                string str = templateIndex.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", item.Name) + "\n\t\t\t\t";
+                int width = getWidth(item.Descript);
+
+                string str = templateIndex.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", item.Name).Replace("#{fileld_width}", width.ToString()) + "\n\t\t\t\t";
+
                 indexDescript.Append(str);
 
-                string col = templateColumns.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", item.Name) + "\n\t\t\t\t";
+                string col = templateColumns.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", item.Name).Replace("#{fileld_width}", width.ToString()) + "\n\t\t\t\t";
                 columns.Append(col);
             }
             string indexFile = File.ReadAllText("template/crud/index.js");
@@ -287,6 +291,13 @@ namespace AntDesignGenerateCode
             File.WriteAllText(servicesPath + "/" + tableName + ".js", servicesFile);
 
             #endregion
+        }
+
+        private int getWidth(string v)
+        {
+            string str =v.Replace("(", String.Empty).Replace(")", String.Empty).Replace("（", String.Empty).Replace("）", String.Empty);
+
+            return str.Length * 40;
         }
 
         /// <summary>

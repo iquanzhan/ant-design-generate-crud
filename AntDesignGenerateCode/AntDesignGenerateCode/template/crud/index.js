@@ -241,8 +241,8 @@ export default class Index extends PureComponent {
         const insertModal = {
             modal: {
                 title: "新增#{tableNameChinese}",
-                width: '65%',
-                style: { paddingTop: 0, paddingBottom: 5 },
+                width: '100%',
+                style: { paddingTop: 0, paddingBottom: 5,top:0 },
             }
         };
 
