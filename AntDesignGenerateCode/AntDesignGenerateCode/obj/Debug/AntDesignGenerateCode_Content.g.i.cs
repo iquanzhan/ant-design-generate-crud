@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bank_info.sql")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud/add.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud/services.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud/models.js")]
