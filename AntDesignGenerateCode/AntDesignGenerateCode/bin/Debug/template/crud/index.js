@@ -267,6 +267,7 @@ export default class Index extends PureComponent {
                                     onShowSizeChange={this.onShowSizeChange}
                                     onRef={(r) => { this.addChild = r }}
                                     onSelectItem={this.onSelectItem}
+                                    scroll={{ x: #{tableWidth} }}
                                 />
                             </div>
 

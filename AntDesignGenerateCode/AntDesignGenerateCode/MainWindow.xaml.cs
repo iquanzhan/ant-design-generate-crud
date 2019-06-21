@@ -232,9 +232,12 @@ namespace AntDesignGenerateCode
             StringBuilder indexDescript = new StringBuilder();
             StringBuilder columns = new StringBuilder();
 
+            int tableWidth = 0;
+
             foreach (var item in list)
             {
                 int width = getWidth(item.Descript);
+                tableWidth += width;
 
                 string str = templateIndex.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", item.Name).Replace("#{fileld_width}", width.ToString()) + "\n\t\t\t\t";
 
@@ -243,9 +246,14 @@ namespace AntDesignGenerateCode
                 string col = templateColumns.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", item.Name).Replace("#{fileld_width}", width.ToString()) + "\n\t\t\t\t";
                 columns.Append(col);
             }
+
+            tableWidth += 180;
+
             string indexFile = File.ReadAllText("template/crud/index.js");
             indexFile = indexFile.Replace("#{descript}", indexDescript.ToString());
             indexFile = indexFile.Replace("#{columns_fileld}", columns.ToString());
+            indexFile = indexFile.Replace("#{tableWidth}", tableWidth.ToString());
+            //#{tableWidth}  tableWidth
 
 
             indexFile = indexFile.Replace("#{tableName}", tableName).Replace("#{tableNameUpper}", tableNameUpper).Replace("#{primaryKey}", tablePrimaryKey).Replace("#{tableNameChinese}", tableNameChinese);
@@ -295,7 +303,7 @@ namespace AntDesignGenerateCode
 
         private int getWidth(string v)
         {
-            string str =v.Replace("(", String.Empty).Replace(")", String.Empty).Replace("（", String.Empty).Replace("）", String.Empty);
+            string str = v.Replace("(", String.Empty).Replace(")", String.Empty).Replace("（", String.Empty).Replace("）", String.Empty);
 
             return str.Length * 40;
         }

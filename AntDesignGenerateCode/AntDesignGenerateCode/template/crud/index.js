@@ -3,7 +3,7 @@ import React, { PureComponent, Suspense } from 'react';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import PageLoading from '@/components/PageLoading';
-import { Icon, Badge, Popconfirm, Divider, message, Modal } from 'antd';
+import { Icon, Badge, Popconfirm, Divider, message, Modal, Button } from 'antd';
 import { connect } from 'dva';
 
 import SearchTable from '@/components/SearchTable';
@@ -33,7 +33,9 @@ export default class Index extends PureComponent {
             list: []
         },
         record: {},
-        showModal: false
+        showModal: false,
+        detailsModal: false,
+        visible:false
     }
 
 
@@ -50,20 +52,28 @@ export default class Index extends PureComponent {
         #{descript}
     ]
 
-    editButtons = {
-        modal: {
-            title: "编辑#{tableNameChinese}",
-            width: '100%',
-            style: { paddingTop: 0, top: 0 },
-        }
-    };
 
     columns = [
         #{columns_fileld}
         {
             title: '操作', dataIndex: 'operate', key: 'x', width: 180, render: (text, record) =>
                 <div>
-                    <a onClick={() => this.editShow(record)}>编辑</a>
+                    <a onClick={() => {
+                        this.setState({
+                            detailsModal: true,
+                            record: record
+                        })
+                    }}>详细信息</a>
+                    <Divider type="vertical" />
+                    
+                    <Button onClick={() => {
+                        this.setState({
+                            visible: true,
+                            record: this.checkItems,
+                            isUpdate: true,
+                            modalTitle: "编辑联系人信息"
+                        })
+                    }}>编辑</Button>
                     <Divider type="vertical" />
                     {record.isDelete == 0 ?
                         (<Popconfirm title="确定停用本条数据？请谨慎操作！" icon={<Icon type="question-circle-o" style={{ color: 'red' }} />} onConfirm={() => this.handleDelete(record.bankOid)}>
@@ -86,25 +96,19 @@ export default class Index extends PureComponent {
     //region editModal相关
     editClose = () => {
         this.setState({
-            showModal: false
+            visible: false
         })
     }
 
     editShow = (record) => {
         this.setState({
-            showModal: true,
+            visible: true,
             record
         })
     }
 
     //endregion
 
-    //设置当前选中的数据
-    onGetRecord(records) {
-        this.setState({
-            record: records
-        })
-    }
 
     //加载表格数据
     initList = () => {
@@ -238,13 +242,6 @@ export default class Index extends PureComponent {
 
     render() {
 
-        const insertModal = {
-            modal: {
-                title: "新增#{tableNameChinese}",
-                width: '100%',
-                style: { paddingTop: 0, paddingBottom: 5,top:0 },
-            }
-        };
 
         return (
             <GridContent>
@@ -253,10 +250,15 @@ export default class Index extends PureComponent {
                         <PageHeaderWrapper style={{ marginTop: 20, marginLeft: 15, border: 'none' }}>
 
                             <div style={{ background: '#fff' }}>
-                                <BaseForm onCancel={() => { this.filterParams = {}; this.initList(); }} formList={this.formList} filterSubmit={this.handleFilterSubmit} rightButtons={this.rightButtons} leftButtons={<div>
-                                    <ProductModal {...insertModal.modal} onRef={(r) => { this.addChild = r }} buttons={[{ modalType: 'open', title: '新增', style: { marginBottom: 0, marginRight: 6, marginLeft: 5 }, type: 'primary', icon: 'plus' }]}>
-                                        <Add#{tableNameUpper} onClose={this.onAddClose} {...modalLayout} />
-                                    </ProductModal></div>} />
+                                <BaseForm onCancel={() => { this.filterParams = {}; this.initList(); }} formList={this.formList} filterSubmit={this.handleFilterSubmit} rightButtons={this.rightButtons}
+                                    leftButtons={<Button type={"primary"} onClick={() => {
+                                        this.setState({
+                                            visible: true,
+                                            record: null,
+                                            isUpdate: false,
+                                            modalTitle: "新增联系人信息"
+                                        })
+                                    }}>添加</Button>} />
 
                                 <BaseTable
                                     columns={this.columns}
@@ -267,6 +269,7 @@ export default class Index extends PureComponent {
                                     onShowSizeChange={this.onShowSizeChange}
                                     onRef={(r) => { this.addChild = r }}
                                     onSelectItem={this.onSelectItem}
+                                    scroll={{ x: #{tableWidth} }}
                                 />
                             </div>
 
@@ -282,7 +285,40 @@ export default class Index extends PureComponent {
                                 maskClosable={false}
                                 destroyOnClose
                             >
-                                <Add#{tableNameUpper} {...modalLayout} isUpdate={true} onClose={this.onEditClose} record={this.state.record} />
+                                
+                            </Modal>
+                            <Modal
+                                title={this.state.modalTitle}
+                                visible={this.state.visible}
+                                width='800px'
+                                onOk={this.handleOk}
+                                onCancel={() => {
+                                    this.setState({ visible: false })
+                                }}
+                                maskClosable={false}
+                                destroyOnClose
+                                closable={false}
+                                style={{ top: 50 }}
+                            >
+                                <Add#{tableNameUpper} onRef={(r) => { this.Add#{tableNameUpper} = r }} {...modalLayout} isUpdate={this.state.isUpdate} onClose={this.onEditClose} record={this.state.record} />
+                            </Modal>
+
+                            <Modal
+                                title="#{tableNameChinese}详细信息"
+                                width='70%'
+                                style={{ top: 20, padding: 0 }}
+                                visible={this.state.detailsModal}
+                                onCancel={() => {
+                                    this.setState({
+                                        detailsModal: false
+                                    })
+                                }}
+                                footer={null}
+                                bodyStyle={{ paddingBottom: 10 }}
+                                maskClosable={false}
+                                destroyOnClose
+                            >
+                                <Details record={this.state.record} {...modalLayout} />
                             </Modal>
 
                         </PageHeaderWrapper>
