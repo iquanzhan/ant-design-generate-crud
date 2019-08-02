@@ -93,11 +93,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bank_info.sql" />
-    <Content Include="template\crud2\ApplicationerList.js" />
     <Content Include="template\crud2\Details.js" />
     <Content Include="template\crud2\EditProduct.js" />
     <Content Include="template\crud2\index.js" />
-    <Content Include="template\crud2\ProductIndex.js" />
+    <Content Include="template\crud2\mock.js" />
+    <Content Include="template\crud2\models.js" />
     <Content Include="template\crud\Add.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
