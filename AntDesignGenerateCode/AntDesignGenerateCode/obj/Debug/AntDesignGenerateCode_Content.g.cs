@@ -9,6 +9,11 @@
 //------------------------------------------------------------------------------
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bank_info.sql")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud2/applicationerlist.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud2/details.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud2/editproduct.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud2/index.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud2/productindex.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud/add.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud/services.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud/models.js")]
