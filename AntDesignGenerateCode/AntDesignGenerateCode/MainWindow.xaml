@@ -16,6 +16,7 @@
             <ComboBoxItem>单表增删改差</ComboBoxItem>
             <ComboBoxItem>单表筛选+展示</ComboBoxItem>
             <ComboBoxItem>单表筛选+展示(非驼峰命名)</ComboBoxItem>
+            <ComboBoxItem>单表筛选+展示(非驼峰命名v2.0)</ComboBoxItem>
         </ComboBox>
     </Grid>
 </Window>

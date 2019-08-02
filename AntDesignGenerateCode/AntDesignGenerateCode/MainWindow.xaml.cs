@@ -118,9 +118,6 @@ namespace AntDesignGenerateCode
 
             #endregion
 
-
-
-
             if (index < 0)
             {
                 System.Windows.MessageBox.Show("请选择生成模版");
