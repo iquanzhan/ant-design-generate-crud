@@ -4,6 +4,22 @@ import { message } from 'antd';
 import BaseForm from "@/components/BaseForm";
 
 
+const formItemLayout = {
+    labelCol: {
+        xs: { span: 24 },
+        sm: { span: 10 },
+        md: { span: 7 },
+        lg: { span: 7 }
+    },
+    wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 14 },
+        md: { span: 14 },
+        lg: { span: 17 }
+    }
+};
+
+
 @connect(({ #{tableName} }) => ({
     #{tableName}
 }))
@@ -25,7 +41,7 @@ class index extends Component {
       values.#{primaryKey} = record.#{primaryKey};
     }
     dispatch({
-      type: ''#{tableName}/add#{tableNameUpper}'',
+      type: '#{tableName}/add#{tableNameUpper}',
       payload: values
     }).then(() => {
       const response = this.props.#{tableName}.addStatus;
