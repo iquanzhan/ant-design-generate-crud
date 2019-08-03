@@ -18,5 +18,6 @@
             <ComboBoxItem>单表筛选+展示(非驼峰命名)</ComboBoxItem>
             <ComboBoxItem>单表筛选+展示(非驼峰命名v2.0)</ComboBoxItem>
         </ComboBox>
+        <CheckBox Content="下划线转驼峰" Name="checkPascal" HorizontalAlignment="Left" Margin="484,364,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

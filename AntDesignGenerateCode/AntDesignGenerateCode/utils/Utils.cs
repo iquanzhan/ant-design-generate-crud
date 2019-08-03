@@ -9,7 +9,7 @@ namespace AntDesignGenerateCode.utils
     public static class Utils
     {
         /// <summary>
-        /// 转换成驼峰命名
+        /// 下划线转换成驼峰命名
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -29,6 +29,20 @@ namespace AntDesignGenerateCode.utils
             }
 
             return value;
+        }
+
+        /// <summary>
+        /// 首字母大写
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string ToFirstUpper(string value)
+        {
+            if (String.IsNullOrEmpty(value))
+            {
+                return "";
+            }
+            return value.Substring(0, 1).ToUpper() + value.Substring(1);
         }
     }
 }

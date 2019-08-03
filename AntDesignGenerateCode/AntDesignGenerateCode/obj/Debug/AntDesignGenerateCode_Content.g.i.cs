@@ -9,11 +9,12 @@
 //------------------------------------------------------------------------------
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bank_info.sql")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud2/details.js")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud2/editproduct.js")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud2/index.js")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud2/mock.js")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud2/models.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crudv2/details.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crudv2/add.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crudv2/index.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crudv2/mock.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crudv2/models.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crudv2/services.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud/add.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud/services.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/crud/models.js")]

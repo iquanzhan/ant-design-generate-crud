@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
-
 import { Divider, Modal, Card } from 'antd';
 import { connect } from 'dva';
 
+import BaseForm from "@/components/ProductForm";
+import BaseTable from '@/components/ProductTable/Base';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
 import Details from './Details';
-import EditProduct from './EditProduct';
-import BaseTable from '@/components/ProductTable/Base';
-import BaseForm from "@/components/ProductForm";
+import Edit#{tableNameUpper} from './Edit#{tableNameUpper}';
+
 
 
 const modalLayout = {
     style: { height: 'calc(80.3vh)', overflowY: 'auto', overflowX: 'hidden' }
 }
 
-@connect(({ approvals }) => ({
-    approvals
+@connect(({ #{tableName} }) => ({
+    #{tableName}
 }))
 export default class index extends Component {
 
@@ -40,18 +40,13 @@ export default class index extends Component {
     //加载表格数据
     initList = () => {
         const that = this;
-        this.setState({
-            loading: true
-        });
-        const { dispatch, type } = this.props;
+        const { dispatch } = this.props;
         dispatch({
-            type: 'approvals/getApprovals',
-            payload: { ...this.filterParams, pageNum: this.state.list.pageNum, pageSize: this.state.list.pageSize, tableType: type }
+            type: '#{tableName}/get#{tableNameUpper}',
+            payload: { ...this.filterParams, pageNum: this.state.list.pageNum, pageSize: this.state.list.pageSize }
         }).then(res => {
-            const response = this.props.approvals.getApprovalsStatus;
-            this.setState({
-                loading: false
-            })
+            const response = this.props.#{tableName}.get#{tableNameUpper}Status;
+
             if (response && response.code == 0) {
                 that.setState({
                     list: response.resultData
@@ -103,123 +98,98 @@ export default class index extends Component {
         //加载记录列表
         this.initList();
     };
+	//停用#{tableNameChinese}
+    handleDelete = (key) => {
+
+        const that = this;
+        const { dispatch } = this.props;
+        dispatch({
+            type: '#{tableName}/delete#{tableNameUpper}',
+            payload: { #{primaryKey}: key }
+        }).then(() => {
+            const response = this.props.#{tableName}.deleteStatus;
+            let responses = JSON.parse(response);
+
+            if (responses.code === 0) {
+                message.success("停用成功");
+                that.initList();
+            }
+            else {
+                message.error(response ? response.msg : '网络请求异常');
+            }
+
+        })
+    }
+
+    //启用数据
+    handleOpen = (key) => {
+
+        const that = this;
+        const { dispatch } = this.props;
+
+        let filterParams = { #{primaryKey}: key, isDelete: 0 };
+
+        //修改数据
+        dispatch({
+            type: '#{tableName}/edit#{tableNameUpper}',
+            payload: filterParams
+        }).then(() => {
+
+            const response = this.props.#{tableName}.editStatus
+
+            if (response && response.code === 0) {
+                message.success("数据启用成功");
+                this.initList();
+            }
+            else {
+                message.error("数据启用异常");
+            }
+
+        }).catch((err => {
+            message.error(JSON.stringify(err));
+        }))
+    }
 
     columns = [
+        #{columns_fileld}
         {
-            title: '产品名称',
-            dataIndex: 'product_name',
-            width: 150
-        },
-        {
-            title: '产品名称（英文）',
-            dataIndex: 'product_name_en',
-            width: 180
-        },
-        {
-            title: '批准文号（批准号）',
-            dataIndex: 'approvals_no',
-            width: 220
-        },
-        {
-            title: '注册人',
-            dataIndex: 'register',
-            width: 230
-        },
-        {
-            title: '注册人英文',
-            dataIndex: 'register_en',
-            width: 230
-        },
-        {
-            title: '注册地址',
-            dataIndex: 'register_addr',
-            width: 250
-        },
-        {
-            title: '注册地址英文',
-            dataIndex: 'register_addr_en',
-            width: 200
-        },
-        {
-            title: '生产企业',
-            dataIndex: 'enterprise',
-            width: 230
-        },
-        {
-            title: '生产企业英文',
-            dataIndex: 'enterprise_en',
-            width: 230
-        },
-        {
-            title: '备注',
-            dataIndex: 'note_info'
-        },
-        {
-            title: '操作', dataIndex: 'operate', key: 'x', render: (text, record) =>
+            title: '操作', dataIndex: 'operate', key: 'x', width: 180, render: (text, record) =>
                 <div>
                     <a onClick={() => {
                         this.setState({
-                            editModal: true,
-                            record
-                        })
-                        this.editProduct.editStep.setState({
-                            updateModalVisible: true
-                        })
-                    }}>编辑</a>
-                    <Divider type="vertical" />
-                    <a onClick={() => {
-                        this.setState({
                             detailsModal: true,
-                            record
+                            record: record
                         })
                     }}>详细信息</a>
-
+                    <Divider type="vertical" />
+                    
+                    <Button onClick={() => {
+                        this.setState({
+                            visible: true,
+                            record: this.checkItems,
+                            isUpdate: true,
+                            modalTitle: "编辑#{tableNameChinese}信息"
+                        })
+                    }}>编辑</Button>
+                    <Divider type="vertical" />
+                    {record.isDelete == 0 ?
+                        (<Popconfirm title="确定停用本条数据？请谨慎操作！" icon={<Icon type="question-circle-o" style={{ color: 'red' }} />} onConfirm={() => this.handleDelete(record.bankOid)}>
+                            <a href="javascript:;">停用</a>
+                        </Popconfirm>) :
+                        (<Popconfirm title="确定启用本条数据？" icon={<Icon type="question-circle-o" style={{ color: 'red' }} />} onConfirm={() => this.handleOpen(record.bankOid)}>
+                            <a href="javascript:;">启用</a>
+                        </Popconfirm>)}
                 </div>,
-            fixed: 'right',
-            width: 130
-        }
-    ];
+        }];
     render() {
         const formList = [
-            {
-                type: 'select',
-                label: '类型',
-                field: 'tableType',
-                placeholder: '请选择产品类型',
-                list: [
-                    { id: '1', name: "产品信息变更" },
-                    { id: '2', name: "技术转让" },
-                    { id: '3', name: "批件再注册" },
-                    { id: '4', name: "证书补发" }
-                ],
-                width: 200
-            },
-            {
-                type: 'input',
-                label: '产品名称',
-                field: 'product_name',
-                placeholder: '请输入产品名称',
-                width: 200
-            },
-            {
-                type: 'input',
-                label: '生产企业',
-                field: 'product_name',
-                placeholder: '请输入生产企业',
-                width: 200
-            }, {
-                type: 'input',
-                label: '申报单位',
-                field: 'regist_unit_name',
-                placeholder: '请输入申报单位',
-                width: 200
-            },
+            #{descript}
         ];
 
         return (
             <PageHeaderWrapper
                 style={{ backgroundColor: '#FFF' }}
-                title={"历史批件"}
+                title={"#{tableNameChinese}"}
             >
                 <Card
                     border={true}
@@ -245,7 +215,7 @@ export default class index extends Component {
                             scroll={{ x: 2300 }}
                         />
                         <Modal
-                            title="批件详细信息"
+                            title="#{tableNameChinese}详细信息"
                             width='70%'
                             style={{ top: 20, padding: 0 }}
                             visible={this.state.detailsModal}
@@ -262,7 +232,7 @@ export default class index extends Component {
                             <Details record={this.state.record} {...modalLayout} />
                         </Modal>
 
-                        <EditProduct onRef={r => this.editProduct = r} record={this.state.record} />
+                        <Edit#{tableNameUpper} onRef={r => this.edit#{tableNameUpper} = r} record={this.state.record} isUpdate={this.state.isUpdate} />
                     </div>
                 </Card>
             </PageHeaderWrapper>

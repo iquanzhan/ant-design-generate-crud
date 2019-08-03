@@ -6,17 +6,17 @@ using System.Text;
 
 namespace AntDesignGenerateCode
 {
-    public class Table
+    public class TableField
     {
         public string Type { get; set; }
         public string Descript { get; set; }
         private Boolean isNoPascal;
 
-        public Table()
+        public TableField()
         {
             this.isNoPascal = false;
         }
-        public Table(Boolean isNoPascal)
+        public TableField(Boolean isNoPascal)
         {
             this.isNoPascal = isNoPascal;
         }
@@ -31,7 +31,7 @@ namespace AntDesignGenerateCode
             }
             set
             {
-                if (!this.isNoPascal)
+                if (this.isNoPascal)
                 {
                     name = Utils.ToHump(value);
                 }

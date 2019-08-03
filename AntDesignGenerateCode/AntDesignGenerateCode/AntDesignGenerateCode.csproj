@@ -53,7 +53,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Table.cs" />
+    <Compile Include="TableField.cs" />
+    <Compile Include="TableDescript.cs" />
     <Compile Include="utils\Utils.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -93,11 +94,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bank_info.sql" />
-    <Content Include="template\crud2\Details.js" />
-    <Content Include="template\crud2\EditProduct.js" />
-    <Content Include="template\crud2\index.js" />
-    <Content Include="template\crud2\mock.js" />
-    <Content Include="template\crud2\models.js" />
+    <Content Include="template\crudv2\Details.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="template\crudv2\Add.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="template\crudv2\index.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="template\crudv2\mock.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="template\crudv2\models.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="template\crudv2\services.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="template\crud\Add.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
