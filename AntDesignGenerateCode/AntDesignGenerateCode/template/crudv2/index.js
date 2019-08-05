@@ -309,6 +309,7 @@ export default class index extends Component {
                             footer={null}
                             bodyStyle={{ paddingBottom: 10 }}
                             maskClosable={false}
+							closable={true}
                             destroyOnClose
                         >
                             <Details record={this.state.record} {...modalLayout} />
@@ -325,7 +326,7 @@ export default class index extends Component {
 						  }}
 						  maskClosable={false}
 						  destroyOnClose
-						  closable={false}
+						  closable={true}
 						  style={{ top: 50 }}
 						>
 						  <Edit#{tableNameUpper}
