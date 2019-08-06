@@ -26,3 +26,4 @@ G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\b
 G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\bin\Debug\template\crudv2\models.js
 G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\bin\Debug\template\crudv2\Add.js
 G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\bin\Debug\template\crudv2\services.js
+G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\obj\Debug\AntDesignGenerateCode.csprojAssemblyReference.cache

@@ -209,7 +209,7 @@ export default class index extends Component {
                             visible: true,
                             record: record,
                             isUpdate: true,
-                            modalTitle: "编辑#{tableNameChinese}信息"
+                            modalTitle: "编辑#{tableNameChinese}"
                         })
                     }}>编辑</a>
                     <Divider type="vertical" />
@@ -249,7 +249,7 @@ export default class index extends Component {
                                     visible: true,
                                     record: null,
                                     isUpdate: false,
-                                    modalTitle: "新增#{tableNameChinese}信息"
+                                    modalTitle: "新增#{tableNameChinese}"
                                 })
                             }}>添加</Button>
                             <Button icon="edit" style={{ marginRight: 12 }} onClick={() => {
