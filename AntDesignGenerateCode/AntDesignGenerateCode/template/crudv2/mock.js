@@ -28,9 +28,21 @@ export default {
     resultData: null
   }),
   /** ---------修改-------- */
-  'PUT /api/#{tableName}': mockjs.mock({
+  'POST /api/#{tableName}': mockjs.mock({
     code: 0,
     msg: '查询成功',
     resultData: null
-  })
+  }),
+    /** ---------禁用-------- */
+  'GET /api/data/#{tableName}/stopUsing': mockjs.mock({
+    code: 0,
+    msg: '禁用成功',
+    resultData: null
+  }),
+    /** ---------启用-------- */
+  'GET /api/data/#{tableName}/startUsing': mockjs.mock({
+    code: 0,
+    msg: '启用成功',
+    resultData: null
+  }),
 };

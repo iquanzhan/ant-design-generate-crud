@@ -5,8 +5,7 @@ import request from '@/utils/request';
 export async function get#{tableNameUpper}(data) {
     return request(`/api/#{tableName}/search`, {
         method: 'POST',
-        body: data,
-        isShowLoading: true
+        body: data
     });
 }
 
@@ -14,8 +13,7 @@ export async function get#{tableNameUpper}(data) {
 export async function add#{tableNameUpper}(data) {
     return request(`/api/#{tableName}`, {
         method: 'POST',
-        body: data,
-        isShowLoading: true
+        body: data
     });
 }
 
@@ -23,8 +21,7 @@ export async function add#{tableNameUpper}(data) {
 export async function edit#{tableNameUpper}(data) {
     return request(`/api/#{tableName}`, {
         method: 'PUT',
-        body: data,
-        isShowLoading: true
+        body: data
     });
 }
 
@@ -32,9 +29,18 @@ export async function edit#{tableNameUpper}(data) {
 export async function delete#{tableNameUpper}(data) {
     return request(`/api/#{tableName}`, {
         method: 'DELETE',
-        body: data,
-        isShowLoading: true
+        body: data
     });
+}
+
+/** ---------禁用#{tableNameChinese}-------- */
+export async function disable#{tableNameUpper}(data) {
+    return request(`/api/data/#{tableName}/stopUsing?#{primaryKey}=${data}`);
+}
+
+/** ---------启用#{tableNameChinese}-------- */
+export async function enable#{tableNameUpper}(data) {
+    return request(`/api/data/#{tableName}/startUsing?#{primaryKey}=${data}`);
 }
 
 

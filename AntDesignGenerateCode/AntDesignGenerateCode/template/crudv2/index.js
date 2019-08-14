@@ -125,18 +125,16 @@ export default class index extends Component {
 	//停用#{tableNameChinese}
     handleDelete = (key) => {
 
-        const that = this;
         const { dispatch } = this.props;
         dispatch({
-            type: '#{tableName}/delete#{tableNameUpper}',
-            payload: { #{primaryKey}: key }
+            type: '#{tableName}/disable#{tableNameUpper}',
+            payload: key
         }).then(() => {
-            const response = this.props.#{tableName}.deleteStatus;
-            let responses = JSON.parse(response);
+            const response = this.props.#{tableName}.disable#{tableNameUpper}Status;
 
-            if (responses.code === 0) {
-                message.success("停用成功");
-                that.initList();
+            if (response && response.code == 0) {
+                message.success(response.msg);
+                this.initList(this.state.treeSelectedKey);
             }
             else {
                 message.error(response ? response.msg : '网络请求异常');
@@ -148,32 +146,22 @@ export default class index extends Component {
     //启用#{tableNameChinese}
     handleOpen = (key) => {
 
-        const that = this;
         const { dispatch } = this.props;
-
-        let filterParams = { #{primaryKey}: key, isDelete: 0 };
-
-        //修改数据
         dispatch({
-            type: '#{tableName}/edit#{tableNameUpper}',
-            payload: filterParams
+            type: '#{tableName}/enable#{tableNameUpper}',
+            payload: key
         }).then(() => {
-
-            const response = this.props.#{tableName}.editStatus
+            const response = this.props.#{tableName}.enable#{tableNameUpper}Status;
 
             if (response && response.code === 0) {
-                message.success("数据启用成功");
-                this.initList();
-				//重置table的选择
-                 this.baseTbale.clearSelection();
+                message.success(response.msg);
+                this.initList(this.state.treeSelectedKey);
             }
             else {
-                message.error("数据启用异常");
+                message.error(response ? response.msg : '网络请求异常');
             }
 
-        }).catch((err => {
-            message.error(JSON.stringify(err));
-        }))
+        })
     }
 
 
@@ -194,7 +182,7 @@ export default class index extends Component {
     columns = [
         #{columns_fileld}
         {
-            title: '操作', dataIndex: 'operate', key: 'x', width: 180, render: (text, record) =>
+            title: '操作',fixed:'right', dataIndex: 'operate', key: 'x', width: 180, render: (text, record) =>
                 <div>
                     <a onClick={() => {
                         this.setState({

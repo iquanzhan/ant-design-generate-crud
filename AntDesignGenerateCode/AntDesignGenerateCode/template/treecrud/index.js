@@ -175,7 +175,7 @@ export default class index extends Component {
         })
     }
 
-    //启用字典信息
+    //启用#{tableNameChinese}
     handleOpen = (key) => {
 
         const { dispatch } = this.props;

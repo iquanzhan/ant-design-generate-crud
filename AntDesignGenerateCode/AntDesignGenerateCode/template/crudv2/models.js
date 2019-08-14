@@ -38,7 +38,25 @@ export default {
                 type: 'deleteStatus',
                 payload: response,
             });
-        }
+        },
+		//Ω˚”√
+        *disable#{tableNameUpper}({ payload }, { call, put }) {
+            let response = yield call(disable#{tableNameUpper}, payload);
+
+            yield put({
+                type: 'disable#{tableNameUpper}Status',
+                payload: response,
+            });
+        },
+        //∆Ù”√
+        *enable#{tableNameUpper}({ payload }, { call, put }) {
+            let response = yield call(enable#{tableNameUpper}, payload);
+
+            yield put({
+                type: 'enable#{tableNameUpper}Status',
+                payload: response,
+            });
+        },
     },
 
     reducers: {
@@ -65,6 +83,18 @@ export default {
                 ...state,
                 deleteStatus: action.payload,
             };
-        }        
+        },
+		enable#{tableNameUpper}Status(state, action) {
+            return {
+                ...state,
+                enable#{tableNameUpper}Status: action.payload,
+            };
+        },
+        disable#{tableNameUpper}Status(state, action) {
+            return {
+                ...state,
+                disable#{tableNameUpper}Status: action.payload,
+            };
+        },
     },
 };
