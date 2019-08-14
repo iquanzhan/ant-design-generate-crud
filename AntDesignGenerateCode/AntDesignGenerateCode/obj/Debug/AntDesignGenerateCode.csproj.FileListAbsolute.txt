@@ -26,4 +26,9 @@ G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\b
 G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\bin\Debug\template\crudv2\models.js
 G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\bin\Debug\template\crudv2\Add.js
 G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\bin\Debug\template\crudv2\services.js
-G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\obj\Debug\AntDesignGenerateCode.csprojAssemblyReference.cache
+G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\bin\Debug\template\treecrud\Add.js
+G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\bin\Debug\template\treecrud\Details.js
+G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\bin\Debug\template\treecrud\mock.js
+G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\bin\Debug\template\treecrud\services.js
+G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\bin\Debug\template\treecrud\models.js
+G:\github\ant-design-generate-crud\AntDesignGenerateCode\AntDesignGenerateCode\bin\Debug\template\treecrud\index.js

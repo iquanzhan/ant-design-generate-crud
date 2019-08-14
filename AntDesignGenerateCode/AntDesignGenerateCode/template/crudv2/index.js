@@ -214,10 +214,10 @@ export default class index extends Component {
                     }}>编辑</a>
                     <Divider type="vertical" />
                     {record.isDelete == 0 ?
-                        (<Popconfirm title="确定停用本条数据？请谨慎操作！" icon={<Icon type="question-circle-o" style={{ color: 'red' }} />} onConfirm={() => this.handleDelete(record.bankOid)}>
+                        (<Popconfirm title="确定停用本条数据？请谨慎操作！" icon={<Icon type="question-circle-o" style={{ color: 'red' }} />} onConfirm={() => this.handleDelete(record.#{primaryKey})}>
                             <a href="javascript:;">停用</a>
                         </Popconfirm>) :
-                        (<Popconfirm title="确定启用本条数据？" icon={<Icon type="question-circle-o" style={{ color: 'red' }} />} onConfirm={() => this.handleOpen(record.bankOid)}>
+                        (<Popconfirm title="确定启用本条数据？" icon={<Icon type="question-circle-o" style={{ color: 'red' }} />} onConfirm={() => this.handleOpen(record.#{primaryKey})}>
                             <a href="javascript:;">启用</a>
                         </Popconfirm>)}
                 </div>,

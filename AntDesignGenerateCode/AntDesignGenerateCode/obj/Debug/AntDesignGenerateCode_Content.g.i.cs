@@ -23,5 +23,11 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/empty/index.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/empty/models.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/empty/services.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/treecrud/add.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/treecrud/details.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/treecrud/mock.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/treecrud/services.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/treecrud/models.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("template/treecrud/index.js")]
 
 

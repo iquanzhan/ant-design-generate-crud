@@ -76,12 +76,14 @@ namespace AntDesignGenerateCode
             }
             else if (index == 2)
             {
-                generateNoPascalCrudV2(folder, tableDescript.tableName, tableDescript.tableNameUpper, tableDescript.tableNameChinese, tableDescript.tableFields, tableDescript.tablePrimaryKey);
+                generateNoPascalCrudV2(folder, tableDescript.tableName, tableDescript.tableNameUpper, tableDescript.tableNameChinese, tableDescript.tableFields, tableDescript.tablePrimaryKey, "crudv2");
             }
             else if (index == 3)
             {
-
-                generateNoPascalCrudV2(folder, tableDescript.tableName, tableDescript.tableNameUpper, tableDescript.tableNameChinese, tableDescript.tableFields, tableDescript.tablePrimaryKey);
+                generateNoPascalCrudV2(folder, tableDescript.tableName, tableDescript.tableNameUpper, tableDescript.tableNameChinese, tableDescript.tableFields, tableDescript.tablePrimaryKey, "crudv2");
+            }
+            else if (index == 4) {
+                generateNoPascalCrudV2(folder, tableDescript.tableName, tableDescript.tableNameUpper, tableDescript.tableNameChinese, tableDescript.tableFields, tableDescript.tablePrimaryKey, "treecrud");
             }
 
             System.Windows.MessageBox.Show("生成成功");
@@ -315,7 +317,7 @@ namespace AntDesignGenerateCode
         /// <param name="tableNameChinese"></param>
         /// <param name="list"></param>
         /// <param name="tablePrimaryKey"></param>
-        private void generateNoPascalCrudV2(string folder, string tableName, string tableNameUpper, string tableNameChinese, List<TableField> list, string tablePrimaryKey)
+        private void generateNoPascalCrudV2(string folder, string tableName, string tableNameUpper, string tableNameChinese, List<TableField> list, string tablePrimaryKey, string templatePath)
         {
             #region 生成详情页面
 
@@ -332,7 +334,7 @@ namespace AntDesignGenerateCode
                 string str = template.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", "record." + item.Name) + "\n\t\t\t";
                 detailsDescript.Append(str);
             }
-            string details = File.ReadAllText("template/crudv2/Details.js");
+            string details = File.ReadAllText("template/" + templatePath + "/Details.js");
             details = details.Replace("#{descript}", detailsDescript.ToString());
 
             string pagesPath = folder + "/pages";
@@ -375,7 +377,7 @@ namespace AntDesignGenerateCode
                 string str = templateEdit.Replace("#{fileld_comment}", item.Descript).Replace("#{fileld_name}", item.Name) + "\n\t\t\t\t";
                 editDescript.Append(str);
             }
-            string editFile = File.ReadAllText("template/crudv2/Add.js");
+            string editFile = File.ReadAllText("template/" + templatePath + "/Add.js");
             editFile = editFile.Replace("#{descript}", editDescript.ToString());
 
             editFile = editFile.Replace("#{tableName}", tableName).Replace("#{tableNameUpper}", tableNameUpper).Replace("#{primaryKey}", tablePrimaryKey).Replace("#{tableNameChinese}", tableNameChinese);
@@ -419,7 +421,7 @@ namespace AntDesignGenerateCode
 
             tableWidth += 180;
 
-            string indexFile = File.ReadAllText("template/crudv2/index.js");
+            string indexFile = File.ReadAllText("template/" + templatePath + "/index.js");
             indexFile = indexFile.Replace("#{descript}", indexDescript.ToString());
             indexFile = indexFile.Replace("#{columns_fileld}", columns.ToString());
             indexFile = indexFile.Replace("#{tableWidth}", tableWidth.ToString());
@@ -443,7 +445,7 @@ namespace AntDesignGenerateCode
                 Directory.CreateDirectory(modelsPath);
             }
 
-            string modelsFile = File.ReadAllText("template/crudv2/models.js");
+            string modelsFile = File.ReadAllText("template/" + templatePath + "/models.js");
 
 
             modelsFile = modelsFile.Replace("#{tableName}", tableName).Replace("#{tableNameUpper}", tableNameUpper).Replace("#{primaryKey}", tablePrimaryKey).Replace("#{tableNameChinese}", tableNameChinese);
@@ -461,7 +463,7 @@ namespace AntDesignGenerateCode
                 Directory.CreateDirectory(servicesPath);
             }
 
-            string servicesFile = File.ReadAllText("template/crudv2/services.js");
+            string servicesFile = File.ReadAllText("template/" + templatePath + "/services.js");
 
 
             servicesFile = servicesFile.Replace("#{tableName}", tableName).Replace("#{tableNameUpper}", tableNameUpper).Replace("#{primaryKey}", tablePrimaryKey).Replace("#{tableNameChinese}", tableNameChinese);
@@ -478,7 +480,7 @@ namespace AntDesignGenerateCode
                 Directory.CreateDirectory(mockPath);
             }
 
-            string mockFile = File.ReadAllText("template/crudv2/mock.js");
+            string mockFile = File.ReadAllText("template/" + templatePath + "/mock.js");
 
             string mockJson = getMockJsonString(list);
 
